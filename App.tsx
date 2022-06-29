@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { LogBox } from 'react-native';
+import { store } from './store';
+import { RootNavigator } from './navigations/RootNavigator';
+import { TailwindProvider } from 'tailwind-rn/dist';
+import utilities from './tailwind.json';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+LogBox.ignoreLogs([
+  'Setting a timer',
+  'AsyncStorage has been extracted from react-native core and will be removed in a future release',
+]);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => (
+  <Provider store={store}>
+    <TailwindProvider utilities={utilities}>
+      <RootNavigator />
+    </TailwindProvider>
+  </Provider>
+);
+
+export default App;
