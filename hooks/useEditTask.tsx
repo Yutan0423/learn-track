@@ -11,6 +11,7 @@ import {
   selectEditedTask,
   selectTag,
 } from '../slices/todoSlice';
+import { Dialog } from 'react-native-elements';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'EditTask'>;
@@ -28,5 +29,31 @@ export const useEditTask = ({ navigation }: Props) => {
   };
   const onChangeTask = (text: string) => {
     dispatch(setEditedTask({ ...editedtask, title: text }));
+  };
+
+  const updateTask = async () => {
+    setUpdateErr('');
+    if (editedtask?.title !== '' && editedtask?.id !== '') {
+      try {
+        await setDoc(
+          doc(db, 'users', user.uid, 'tags', tag.id, 'tasks', editedtask.id),
+          { title: editedtask.title },
+          { merge: true },
+        );
+        dispatch(resetEditedTask());
+        navigation.goBack();
+      } catch (err: any) {
+        dispatch(resetEditedTask());
+        setUpdateErr(err.message);
+      }
+    }
+  };
+
+  return {
+    editedtask,
+    updateErr,
+    onChangeTask,
+    updateTask,
+    resetInput,
   };
 };

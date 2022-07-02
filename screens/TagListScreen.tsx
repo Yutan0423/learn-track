@@ -14,6 +14,7 @@ import { Title } from '../components/Title';
 import { RootStackParamList, Tag } from '../types/types';
 import { TagCard } from '../components/TagCard';
 import { useGetTags } from '../hooks/useGetTags';
+import { Button } from '../components/Button';
 
 type Item = {
   item: Omit<Tag, 'createdAt'>;
@@ -43,6 +44,10 @@ export const TagListScreen: VFC<Props> = ({ navigation }) => {
   }
   return (
     <SafeAreaView style={tw('flex-1 bg-gray-100 items-center')}>
+      <Button
+        name="Go to LearnTracker"
+        onPress={() => navigation.navigate('TrackStack')}
+      />
       <Title first="Tag" last="List" />
       <TouchableOpacity
         style={tw('mt-2')}

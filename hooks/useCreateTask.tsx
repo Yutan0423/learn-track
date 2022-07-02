@@ -1,4 +1,4 @@
-import { useState, VFC } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';

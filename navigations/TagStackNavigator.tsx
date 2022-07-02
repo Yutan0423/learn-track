@@ -3,6 +3,7 @@ import { View, Alert } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TagListScreen } from '../screens/TagListScreen';
 import { TaskStackNavigator } from '../navigations/TaskStackNavigator';
+import { TrackStackNavigator } from '../navigations/TrackStackNavigator';
 import { RootStackParamList } from '../types/types';
 import { CreateTagScreen } from '../screens/CreateTagScreen';
 import { useSelector, useDispatch } from 'react-redux';
@@ -51,6 +52,7 @@ export const TagStackNavigator: VFC = () => {
       >
         <Stack.Screen name="TagList" component={TagListScreen} />
         <Stack.Screen name="TaskStack" component={TaskStackNavigator} />
+        <Stack.Screen name="TrackStack" component={TrackStackNavigator} />
       </Stack.Group>
       <Stack.Group
         screenOptions={{
