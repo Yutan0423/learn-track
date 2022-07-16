@@ -2,8 +2,8 @@ import 'dotenv/config';
 
 export default {
   expo: {
-    name: 'learn-track',
-    slug: 'learn-track',
+    name: 'study_record',
+    slug: 'study_record',
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/icon.png',

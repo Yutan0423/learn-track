@@ -5,6 +5,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types/types';
 import { useTailwind } from 'tailwind-rn/dist';
 import { Title } from '../components/Title';
+import { connectStorageEmulator } from 'firebase/storage';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'TrackHome'>;
@@ -14,8 +15,11 @@ export const TrackHomeScreen: VFC<Props> = ({ navigation }) => {
   const tw = useTailwind();
   const HOUR_IN_SEC = 3600;
   const MIN_IN_SEC = 60;
-  const [second, SetSecond] = useState(0);
+  const [second, setSecond] = useState(0);
   const [time, setTime] = useState('00:00:00');
+  const [res, setRes] = useState('');
+  const [getErr, setGetErr] = useState('');
+  const url = 'https:localhost:8080/api/hello';
 
   const timeToSec = (time: string): number => {
     const [h, m, s] = time.split(':').map((e) => parseInt(e));
@@ -28,7 +32,19 @@ export const TrackHomeScreen: VFC<Props> = ({ navigation }) => {
   };
 
   const countDownInner = (): void => {
-    SetSecond(second - 1);
+    setSecond(second - 1);
+  };
+
+  const getHello = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/hello');
+      const json = await response.json();
+      setRes(json.message);
+      console.log(json.message);
+    } catch (err: any) {
+      setGetErr(err);
+      console.log('Failed...');
+    }
   };
 
   return (
@@ -67,6 +83,13 @@ export const TrackHomeScreen: VFC<Props> = ({ navigation }) => {
         bgColor="bg-purple-600"
         onPress={() => navigation.goBack()}
       />
+      <Button
+        name="HelloApi"
+        bgColor="bg-purple-600"
+        onPress={() => getHello()}
+      />
+      <Text>{res}</Text>
+      {getErr !== ''}
     </SafeAreaView>
   );
 };
